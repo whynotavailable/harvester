@@ -16,9 +16,9 @@ pub async fn get_agents(Extension(state): Extension<models::State>) -> Json<Vec<
 }
 
 const PUT_AGENTS_SQL: &str = "INSERT INTO Agent
-(key, name, config) VALUES
+(id, name, config) VALUES
 ($1, $2, $3)
-ON CONFLICT (key) DO UPDATE SET name = excluded.name, config = excluded.config;";
+ON CONFLICT (id) DO UPDATE SET name = excluded.name, config = excluded.config;";
 
 pub async fn put_agents(
     Extension(state): Extension<models::State>,
