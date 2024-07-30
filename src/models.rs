@@ -9,7 +9,7 @@ pub struct State {
 
 #[derive(Debug, Serialize, Deserialize, FromRow)]
 pub struct Agent {
-    pub key: Option<Uuid>,
+    pub id: Option<Uuid>,
     pub name: String,
     pub config: PgHstore,
 }

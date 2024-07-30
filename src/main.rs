@@ -1,4 +1,4 @@
-use axum::{Extension, Router};
+use axum::Extension;
 
 use harvester::{models, routes};
 use sqlx::postgres::PgPoolOptions;
@@ -12,7 +12,7 @@ async fn main() -> Result<(), sqlx::Error> {
         .connect("postgres://postgres:example@localhost/test")
         .await?;
 
-    let app = Router::new().merge(routes::router());
+    let app = routes::router();
 
     let app = app.layer(ServiceBuilder::new().layer(Extension(models::State { pool })));
 

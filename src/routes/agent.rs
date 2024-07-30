@@ -1,11 +1,50 @@
 use axum::{
-    extract,
-    routing::{get, put},
+    extract::{self, Path},
+    http::StatusCode,
+    routing::{delete, get, put},
     Extension, Json, Router,
 };
 use uuid::Uuid;
 
 use crate::models;
+
+pub async fn delete_agent(
+    Extension(state): Extension<models::State>,
+    Path(id): Path<Uuid>,
+) -> StatusCode {
+    println!("Hi {}", id);
+    let result = sqlx::query("DELETE FROM public.agent WHERE id = $1")
+        .bind(id)
+        .execute(&state.pool)
+        .await;
+
+    match result {
+        Ok(r) => {
+            if r.rows_affected() > 0 {
+                StatusCode::OK
+            } else {
+                StatusCode::NOT_FOUND
+            }
+        }
+        Err(_) => StatusCode::INTERNAL_SERVER_ERROR,
+    }
+}
+
+pub async fn get_agent(
+    Extension(state): Extension<models::State>,
+    Path(id): Path<Uuid>,
+) -> Result<Json<models::Agent>, StatusCode> {
+    println!("Hi {}", id);
+    let result = sqlx::query_as::<_, models::Agent>("SELECT * FROM public.agent WHERE id = $1")
+        .bind(id)
+        .fetch_one(&state.pool)
+        .await;
+
+    match result {
+        Ok(r) => Ok(Json(r)),
+        Err(_) => Err(StatusCode::NOT_FOUND),
+    }
+}
 
 pub async fn get_agents(Extension(state): Extension<models::State>) -> Json<Vec<models::Agent>> {
     let vec = sqlx::query_as::<_, models::Agent>("SELECT * FROM public.agent")
@@ -26,12 +65,12 @@ pub async fn put_agents(
 ) -> Json<models::Agent> {
     let mut payload = payload;
 
-    if payload.key.is_none() {
-        payload.key = Some(Uuid::new_v4());
+    if payload.id.is_none() {
+        payload.id = Some(Uuid::new_v4());
     }
 
     _ = sqlx::query(PUT_AGENTS_SQL)
-        .bind(payload.key)
+        .bind(payload.id)
         .bind(&payload.name)
         .bind(&payload.config)
         .execute(&state.pool)
@@ -42,6 +81,8 @@ pub async fn put_agents(
 
 pub fn router() -> Router {
     Router::new()
+        .route("/agents/:id", get(get_agent))
         .route("/agents", get(get_agents))
         .route("/agents", put(put_agents))
+        .route("/agents/:id", delete(delete_agent))
 }
