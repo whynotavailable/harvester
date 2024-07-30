@@ -8,7 +8,7 @@ use tower::ServiceBuilder;
 #[tokio::main]
 async fn main() -> Result<(), sqlx::Error> {
     let pool = PgPoolOptions::new()
-        .max_connections(50)
+        .max_connections(50) // Local testing, this will need to be in a dotfile
         .connect("postgres://postgres:example@localhost/test")
         .await?;
 
