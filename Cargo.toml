@@ -11,6 +11,7 @@ sqlx = { version = "0.8.0", features = [
   "derive",
   "uuid",
   "json",
+  "chrono",
 ] }
 axum = "0.7.5"
 serde = { version = "1.0.204", features = ["derive"] }
@@ -23,3 +24,4 @@ uuid = { version = "1.10.0", features = [
   "macro-diagnostics",
   "serde",
 ] }
+chrono = { version = "0.4.38", features = ["serde"] }

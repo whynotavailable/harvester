@@ -4,15 +4,23 @@ use axum::{
     routing::{delete, get, put},
     Extension, Json, Router,
 };
+use serde::{Deserialize, Serialize};
+use sqlx::{postgres::types::PgHstore, prelude::FromRow};
 use uuid::Uuid;
 
 use crate::models;
+
+#[derive(Debug, Serialize, Deserialize, FromRow)]
+pub struct Agent {
+    pub id: Option<Uuid>,
+    pub name: String,
+    pub config: PgHstore,
+}
 
 pub async fn delete_agent(
     Extension(state): Extension<models::State>,
     Path(id): Path<Uuid>,
 ) -> StatusCode {
-    println!("Hi {}", id);
     let result = sqlx::query("DELETE FROM public.agent WHERE id = $1")
         .bind(id)
         .execute(&state.pool)
@@ -33,9 +41,8 @@ pub async fn delete_agent(
 pub async fn get_agent(
     Extension(state): Extension<models::State>,
     Path(id): Path<Uuid>,
-) -> Result<Json<models::Agent>, StatusCode> {
-    println!("Hi {}", id);
-    let result = sqlx::query_as::<_, models::Agent>("SELECT * FROM public.agent WHERE id = $1")
+) -> Result<Json<Agent>, StatusCode> {
+    let result = sqlx::query_as::<_, Agent>("SELECT * FROM public.agent WHERE id = $1")
         .bind(id)
         .fetch_one(&state.pool)
         .await;
@@ -46,8 +53,8 @@ pub async fn get_agent(
     }
 }
 
-pub async fn get_agents(Extension(state): Extension<models::State>) -> Json<Vec<models::Agent>> {
-    let vec = sqlx::query_as::<_, models::Agent>("SELECT * FROM public.agent")
+pub async fn get_agents(Extension(state): Extension<models::State>) -> Json<Vec<Agent>> {
+    let vec = sqlx::query_as::<_, Agent>("SELECT * FROM public.agent")
         .fetch_all(&state.pool)
         .await;
 
@@ -61,8 +68,8 @@ ON CONFLICT (id) DO UPDATE SET name = excluded.name, config = excluded.config;";
 
 pub async fn put_agents(
     Extension(state): Extension<models::State>,
-    extract::Json(payload): extract::Json<models::Agent>,
-) -> Json<models::Agent> {
+    extract::Json(payload): extract::Json<Agent>,
+) -> Json<Agent> {
     let mut payload = payload;
 
     if payload.id.is_none() {
