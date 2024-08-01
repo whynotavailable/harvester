@@ -4,18 +4,6 @@ use serde::{Deserialize, Serialize};
 use sqlx::{postgres::types::PgHstore, prelude::FromRow};
 use uuid::Uuid;
 
-/*
- *
-CREATE TABLE Source (
-    Id uuid PRIMARY KEY,
-    Name text NOT NULL,
-    Code uuid NOT NULL,
-    Kind text NOT NULL,
-    Config hstore NOT NULL,
-    LastScan TIMESTAMP NULL
-);
-*/
-
 #[derive(Debug, Serialize, Deserialize, FromRow)]
 pub struct Store {
     pub id: Option<Uuid>,
