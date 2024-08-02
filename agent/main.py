@@ -27,7 +27,6 @@ def is_column_unstructured(column):
         return False
 
 
-# map(lambda x: x + x, numbers)
 tables = get_stuff(cur.fetchall(), get_table_data)
 for table in tables:
     get_column_sql = "SELECT * FROM information_schema.columns WHERE table_schema = %s AND table_name = %s"
