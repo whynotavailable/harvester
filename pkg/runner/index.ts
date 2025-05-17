@@ -1,7 +1,7 @@
-import type { Hello } from "shared"
+import { dumpSchema, helloSchema, type Hello } from "shared"
 
 const hi: Hello = {
-  name: "dave"
+    name: "dave"
 }
 
-console.log(hi)
+console.log(dumpSchema(helloSchema))

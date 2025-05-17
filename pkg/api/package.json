@@ -1,5 +1,5 @@
 {
-    "name": "shared",
+    "name": "api",
     "module": "index.ts",
     "type": "module",
     "scripts": {
@@ -11,5 +11,8 @@
     "peerDependencies": {
         "typescript": "^5.0.0"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@types/express": "^5.0.2",
+        "express": "^5.1.0"
+    }
 }

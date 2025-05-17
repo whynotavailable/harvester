@@ -1,13 +1,13 @@
 {
-  "name": "harvester",
-  "scripts": {
-    "ts-check": "bun run --filter '*' ts-check"
-  },
-  "workspaces": [
-    "pkg/runner",
-    "pkg/shared"
-  ],
-  "dependencies": {
-    "shared": "workspace:*"
-  }
+    "name": "harvester",
+    "scripts": {
+        "ts-check": "bun run --filter '*' ts-check"
+    },
+    "workspaces": [
+        "pkg/*"
+    ],
+    "dependencies": {
+        "shared": "workspace:*",
+        "zod": "^3.25.0-beta.20250517T081109"
+    }
 }

@@ -1,3 +1,2 @@
-export interface Hello {
-  name: string;
-}
+export * from './types'
+export * from './utils'
