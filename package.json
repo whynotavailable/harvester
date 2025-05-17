@@ -1,7 +1,11 @@
 {
   "name": "harvester",
+  "scripts": {
+    "ts-check": "bun run --filter '*' ts-check"
+  },
   "workspaces": [
-    "pkg/*"
+    "pkg/runner",
+    "pkg/shared"
   ],
   "dependencies": {
     "shared": "workspace:*"
