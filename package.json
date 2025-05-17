@@ -1,17 +1,6 @@
 {
   "name": "harvester",
-  "module": "index.ts",
-  "type": "module",
-  "scripts": {
-    "ts-check": "bun run tsc --noEmit"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
   "workspaces": [
-    "packages/*"
+    "pkg/*"
   ]
 }

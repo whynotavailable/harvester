@@ -2,7 +2,6 @@
   "name": "shared",
   "module": "index.ts",
   "type": "module",
-  "scripts": {},
   "devDependencies": {
     "@types/bun": "latest"
   },
