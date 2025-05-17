@@ -20,6 +20,10 @@ export async function callApi(key: string, body: any): Promise<Response> {
 }
 
 export async function validateResponse<T extends z.ZodType>(response: Response, schema: T): Promise<z.infer<T>> {
+    if (response.status != 200) {
+        throw await response.text()
+    }
+
     const { data, error } = schema.safeParse(await response.json())
 
     if (error != null) {
