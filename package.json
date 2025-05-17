@@ -2,5 +2,8 @@
   "name": "harvester",
   "workspaces": [
     "pkg/*"
-  ]
+  ],
+  "dependencies": {
+    "shared": "workspace:*"
+  }
 }
