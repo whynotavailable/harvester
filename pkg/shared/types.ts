@@ -1,4 +1,5 @@
 import { z } from "zod/v4";
+import { addToRegistry } from "./utils";
 
 export const rpcRequestSchema = z.object({
     key: z.string(),
@@ -18,3 +19,4 @@ export const simpleResponseSchema = z.object({
 });
 
 export type SimpleResponse = z.infer<typeof simpleResponseSchema>;
+
