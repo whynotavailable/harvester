@@ -1,11 +1,15 @@
 import z from "zod/v4";
 import express from 'express'
-import { rpcRequestSchema, type FunctionMetadata, type RpcRequest } from "./types";
+import { type FunctionMetadata, type RpcResponse } from "./types";
 import { register } from "./functions/_register";
+import { rpcRequestSchema, type RpcRequest } from "shared";
 
 export const functionList: Record<string, FunctionMetadata> = {}
-export function addFunction(key: string, func: FunctionMetadata) {
-    functionList[key] = func;
+export function addFunction(key: string, schema: z.ZodType, func: (req: express.Request) => Promise<RpcResponse>) {
+    functionList[key] = {
+        schema,
+        func
+    };
 }
 
 register()
@@ -60,7 +64,16 @@ app.post('/_rpc', (req, res) => {
         return
     }
 
-    functionList[body.key].func(req, res);
+    // Swap to promise with error fallback
+    functionList[body.key].func(req)
+        .then(response => {
+            res.statusCode = response.statusCode;
+            res.send(response.data)
+        })
+        .catch(response => {
+            res.statusCode = 500;
+            res.send(response)
+        })
 })
 
 // Start the server

@@ -1,15 +1,13 @@
 import { helloSchema, type Hello } from "shared";
 import { addFunction } from "..";
+import { statusOk } from "../http";
 
 export function setup() {
-    addFunction("hi", {
-        schema: helloSchema,
-        func(req, resp) {
-            const body: Hello = req.body;
+    addFunction("hi", helloSchema, async (req) => {
+        const body: Hello = req.body;
 
-            resp.send({
-                hi: body.name
-            })
-        },
+        return statusOk({
+            hi: body.name
+        })
     })
 }
