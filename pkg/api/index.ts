@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 // Add RPC endpoint
-app.get('/health', (_req, res) => {
+app.get('/_health', (_req, res) => {
     res.send({ status: 'ok' })
 });
 
@@ -41,7 +41,7 @@ function validate(schema: z.ZodType, body: any, res: express.Response): boolean 
     return true;
 }
 
-app.post('/rpc', (req, res) => {
+app.post('/_rpc', (req, res) => {
     if (!validate(rpcRequestSchema, req.body, res)) {
         return
     }
