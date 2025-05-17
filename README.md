@@ -4,7 +4,10 @@ Harvester is a tool for scraping and understanding your data.
 
 ## Contributions
 
-I'm not looking for them outside of those I have specifically reached out to.
+I'm not looking for them outside of those I have specifically reached out to. This will change once I get the version
+version going.
+
+The UI in particular will likely be troublesome cause OIDC.
 
 ## Important Future Architecture
 
