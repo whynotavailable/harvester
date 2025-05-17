@@ -1,7 +1,8 @@
 {
     "name": "harvester",
     "scripts": {
-        "ts-check": "bun run --filter '*' ts-check"
+        "ts-check": "bun run --filter '*' ts-check",
+        "license": "find pkg -name '*.ts' -exec bun run licenser.ts {} \\;"
     },
     "workspaces": [
         "pkg/*"
