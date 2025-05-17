@@ -27,7 +27,10 @@ export async function validateResponse<T extends z.ZodType>(response: Response, 
     const { data, error } = schema.safeParse(await response.json())
 
     if (error != null) {
-        throw error;
+        throw {
+            message: "Validation Errors",
+            issues: error.issues
+        };
     }
 
     return data;
