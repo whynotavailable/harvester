@@ -16,5 +16,59 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
+import type z from 'zod/v4';
+import type { RpcRequest } from './types'
+
 export * from './types'
 export * from './utils'
+
+let uri = "";
+
+export function setUri(newUri: string) {
+  uri = newUri;
+}
+
+export interface ApiRequest<T> {
+  key: string;
+  body: any;
+  schema: T,
+  headers?: Record<string, string>
+}
+
+// Generic rpc caller. May change
+export async function callApi<T extends z.ZodType>(request: ApiRequest<T>): Promise<z.infer<T>> {
+  if (uri === "") {
+    throw "Set the uri";
+  }
+
+  const json: RpcRequest = {
+    key: request.key,
+    data: request.body
+  }
+
+  const response = await fetch(uri, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(request.headers != undefined ? request.headers : {})
+    },
+    body: JSON.stringify(json)
+  })
+
+  if (response.status != 200) {
+    throw await response.text()
+  }
+
+  const { data, error } = request.schema.safeParse(await response.json());
+
+  if (error != null) {
+    throw {
+      message: "Reponse Validation Failed",
+      cause: error.cause,
+      issues: error.issues,
+    }
+  }
+
+  return data;
+}
+
