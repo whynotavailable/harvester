@@ -19,8 +19,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 import type { RpcResponse } from "./types";
 
 export function statusOk(data: any): RpcResponse {
-    return {
-        statusCode: 200,
-        data
-    }
+  return {
+    statusCode: 200,
+    data
+  }
 }
