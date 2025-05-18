@@ -22,7 +22,15 @@ import type { RpcRequest } from './types'
 export * from './types'
 export * from './utils'
 
+type getTokenHook = () => Promise<string>
+
 let uri = "";
+
+let getToken: getTokenHook | null = null;
+
+export function setGetToken(hook: getTokenHook) {
+  getToken = hook;
+}
 
 export function setUri(newUri: string) {
   uri = newUri;
@@ -32,7 +40,7 @@ export interface ApiRequest<T> {
   key: string;
   body: any;
   schema: T;
-  headers?: Record<string, string>;
+  headers?: Record<string, string>,
 }
 
 // Generic rpc caller. May change
@@ -51,7 +59,8 @@ export async function callApi<T extends z.ZodType>(request: ApiRequest<T>): Prom
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      ...(request.headers != undefined ? request.headers : {})
+      ...(request.headers != undefined ? request.headers : {}),
+      ...(getToken != null ? ({ "Authorization": `bearer ${await getToken()}` }) : {}),
     },
     body: JSON.stringify(json)
   })
