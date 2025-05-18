@@ -18,7 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import z from 'zod/v4'
 
-// ignore this warning, it won't actually work.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const types = require('./types.ts')
 
 const schemaKeys = Object.keys(types)
