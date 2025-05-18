@@ -16,20 +16,20 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import z from 'zod/v4'
+import z from 'zod/v4';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const types = require('./types.ts')
+const types = require('./types.ts');
 
 const schemaKeys = Object.keys(types)
-  .filter(x => x.endsWith('Schema'))
+  .filter(x => x.endsWith('Schema'));
 
-const schemas: Record<string, string> = {}
+const schemas: Record<string, string> = {};
 
-schemaKeys.forEach(schemaKey => {
-  const key = schemaKey.replace("Schema", "")
-  z.globalRegistry.add(types[schemaKey], { id: key })
-  schemas[key] = JSON.stringify(z.toJSONSchema(types[schemaKey]))
-})
+schemaKeys.forEach((schemaKey) => {
+  const key = schemaKey.replace('Schema', '');
+  z.globalRegistry.add(types[schemaKey], { id: key });
+  schemas[key] = JSON.stringify(z.toJSONSchema(types[schemaKey]));
+});
 
-console.log(JSON.stringify(z.toJSONSchema(z.globalRegistry), null, 3))
+console.log(JSON.stringify(z.toJSONSchema(z.globalRegistry), null, 3));

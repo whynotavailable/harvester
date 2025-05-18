@@ -16,18 +16,18 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { helloSchema, type Hello, type SimpleResponse } from "shared";
-import { addFunction } from "..";
-import { statusOk } from "../http";
+import { helloSchema, type Hello, type SimpleResponse } from 'shared';
+import { addFunction } from '..';
+import { statusOk } from '../http';
 
 export function setup() {
-  addFunction("hi", helloSchema, async (req) => {
+  addFunction('hi', helloSchema, async (req) => {
     const body: Hello = req.body.data;
 
     const response: SimpleResponse = {
-      message: body.name
-    }
+      message: body.name,
+    };
 
-    return statusOk(response)
-  })
+    return statusOk(response);
+  });
 }

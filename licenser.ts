@@ -16,9 +16,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import fs from 'fs'
+import fs from 'fs';
 
-const fileName = process.argv.reverse()[0]
+const fileName = process.argv.reverse()[0];
 
 if (!fs.existsSync(fileName)) {
   console.log(`file "${fileName}" doesn't exist.`);
@@ -26,20 +26,19 @@ if (!fs.existsSync(fileName)) {
 }
 
 const fileData = fs.readFileSync(fileName, { encoding: 'utf-8' });
-const license = fs.readFileSync("LICENSE", { encoding: 'utf-8' });
+const license = fs.readFileSync('LICENSE', { encoding: 'utf-8' });
 
 const licenseStuff = `/* LICENSE
 ${license.trim()}
-*/`
+*/`;
 
-
-if (!fileData.startsWith("/* LICENSE")) {
-  let buffer = licenseStuff + "\n\n";
+if (!fileData.startsWith('/* LICENSE')) {
+  let buffer = licenseStuff + '\n\n';
 
   buffer += fileData;
-  fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' })
+  fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' });
 }
 else {
   const buffer = fileData.replace(/\/\* LICENSE.*?(\*\/)/s, licenseStuff);
-  fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' })
+  fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' });
 }

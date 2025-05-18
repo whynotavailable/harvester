@@ -16,13 +16,12 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import z from "zod/v4";
+import z from 'zod/v4';
 
 export function dumpSchema(obj: z.ZodType): string {
-  return JSON.stringify(z.toJSONSchema(obj))
+  return JSON.stringify(z.toJSONSchema(obj));
 }
 
 export function addToRegistry(id: string, schema: z.ZodType) {
-  z.globalRegistry.add(schema, { id })
+  z.globalRegistry.add(schema, { id });
 }
-
