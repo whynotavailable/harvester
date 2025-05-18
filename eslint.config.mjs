@@ -14,7 +14,6 @@ export default defineConfig([
     rules: {
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      '@stylistic/js/multiline-comment-style': 'off',
       '@stylistic/semi': ['error', 'always'],
       '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
     },
