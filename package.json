@@ -1,15 +1,23 @@
 {
-    "name": "harvester",
-    "scripts": {
-        "ts-check": "bun run --filter '*' ts-check",
-        "license": "find pkg -name '*.ts' -exec bun run licenser.ts {} \\;",
-        "ui": "bun run --filter ui dev"
-    },
-    "workspaces": [
-        "pkg/*"
-    ],
-    "dependencies": {
-        "shared": "workspace:*",
-        "zod": "^3.25.0-beta.20250517T081109"
-    }
+  "name": "harvester",
+  "scripts": {
+    "ts-check": "bun run --filter '*' ts-check",
+    "license": "find pkg -name '*.ts' -exec bun run licenser.ts {} \\;",
+    "ui": "bun run --filter ui dev",
+    "lint": "bun run eslint; bun run --filter ui lint;"
+  },
+  "workspaces": [
+    "pkg/*"
+  ],
+  "dependencies": {
+    "shared": "workspace:*",
+    "zod": "^3.25.0-beta.20250517T081109"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "eslint": "^9.27.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.1.0",
+    "typescript-eslint": "^8.32.1"
+  }
 }

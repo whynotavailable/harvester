@@ -21,8 +21,8 @@ import fs from 'fs'
 const fileName = process.argv.reverse()[0]
 
 if (!fs.existsSync(fileName)) {
-    console.log(`file "${fileName}" doesn't exist.`);
-    process.exit(1);
+  console.log(`file "${fileName}" doesn't exist.`);
+  process.exit(1);
 }
 
 const fileData = fs.readFileSync(fileName, { encoding: 'utf-8' });
@@ -34,12 +34,12 @@ ${license.trim()}
 
 
 if (!fileData.startsWith("/* LICENSE")) {
-    let buffer = licenseStuff + "\n\n";
+  let buffer = licenseStuff + "\n\n";
 
-    buffer += fileData;
-    fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' })
+  buffer += fileData;
+  fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' })
 }
 else {
-    let buffer = fileData.replace(/\/\* LICENSE.*?(\*\/)/s, licenseStuff);
-    fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' })
+  const buffer = fileData.replace(/\/\* LICENSE.*?(\*\/)/s, licenseStuff);
+  fs.writeFileSync(fileName, buffer, { encoding: 'utf-8' })
 }

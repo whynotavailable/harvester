@@ -16,17 +16,17 @@ You should have received a copy of the GNU Affero General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { dumpSchema, helloSchema, simpleResponseSchema, type Hello } from "shared"
+import { simpleResponseSchema, type Hello } from "shared"
 import { callApi, validateResponse } from "./service";
 
 const hi: Hello = {
-    name: "dave"
+  name: "dave"
 };
 
 (async () => {
-    const resp = await callApi("hi", hi);
-    const data = await validateResponse(resp, simpleResponseSchema)
-    console.log(data.message)
+  const resp = await callApi("hi", hi);
+  const data = await validateResponse(resp, simpleResponseSchema)
+  console.log(data.message)
 })().then().catch(err => {
-    console.error(err)
+  console.error(err)
 });

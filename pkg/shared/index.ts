@@ -31,11 +31,12 @@ export function setUri(newUri: string) {
 export interface ApiRequest<T> {
   key: string;
   body: any;
-  schema: T,
-  headers?: Record<string, string>
+  schema: T;
+  headers?: Record<string, string>;
 }
 
 // Generic rpc caller. May change
+// INFO: The generic is useless, but it means you don't need to pass the type.
 export async function callApi<T extends z.ZodType>(request: ApiRequest<T>): Promise<z.infer<T>> {
   if (uri === "") {
     throw "Set the uri";
