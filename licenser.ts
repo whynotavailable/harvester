@@ -16,6 +16,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+// INFO: This file is used to apply the license text to all code files.
+
 import fs from 'fs';
 
 const fileName = process.argv.reverse()[0];
