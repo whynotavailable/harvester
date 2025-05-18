@@ -29,7 +29,7 @@ const fileData = fs.readFileSync(fileName, { encoding: 'utf-8' });
 const license = fs.readFileSync('LICENSE', { encoding: 'utf-8' });
 
 const licenseStuff = `/* LICENSE
-${license.trim().split('\n').map(x => (' * ' + x).trim()).join('\n')}
+${license.trim().split('\n').map(x => (' * ' + x).trimEnd()).join('\n')}
  */`;
 
 if (!fileData.startsWith('/* LICENSE')) {
